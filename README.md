@@ -1,2 +1,2 @@
 # Blog API
-# A RESTful API built with Django REST Framework that allows users to create, read, update, and delete blog posts and comments. Features include user authentication, follower/following system, and efficient data handling for scalable blogging platforms. Perfect for developers looking to integrate blogging functionality into web or mobile applications.
+## A RESTful API built with Django REST Framework that allows users to create, read, update, and delete blog posts and comments. Features include user authentication, follower/following system, and efficient data handling for scalable blogging platforms. Perfect for developers looking to integrate blogging functionality into web or mobile applications.

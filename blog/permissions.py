@@ -2,16 +2,23 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class IsAuthorOrReadOnly(BasePermission):
     """
-    Custom permission to only allow authors of an object to edit it.
-    Read permissions are allowed to any request,
-    so we'll always allow GET, HEAD or OPTIONS requests.
+    Custom permission:
+    - Any user can read (GET, HEAD, OPTIONS)
+    - Only authenticated authors can write (POST, PUT, DELETE)
     """
 
-    def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
+    def has_permission(self, request, view):
+        # Allow read-only requests for anyone
         if request.method in SAFE_METHODS:
             return True
 
-        # Write permissions are only allowed to the author of the post.
+        # Unsafe requests require authenticated user
+        return request.user and request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions allowed to anyone
+        if request.method in SAFE_METHODS:
+            return True
+
+        # Write permissions only allowed to the author
         return obj.author == request.user

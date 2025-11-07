@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=*
+      - DATABASE_URL=postgres://blog_user:blog_pass123@db:5432/blog_api_db
+      - CELERY_BROKER_URL=redis://redis:6379/0
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=blog_api_db
+      - POSTGRES_USER=blog_user
+      - POSTGRES_PASSWORD=blog_pass123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

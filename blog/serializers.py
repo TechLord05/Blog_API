@@ -3,11 +3,12 @@ from .models import Post, Comment, Follower
 from django.contrib.auth.models import User
 
 class CommentSerializer(serializers.ModelSerializer):
+    created_at = serializers.PrimaryKeyRelatedField(read_only=True)
     author = serializers.StringRelatedField(read_only=True) # shows username instead of ID
 
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'author', 'body', 'created_at']
+        fields = '__all__'
 
 
 class PostSerializer(serializers.ModelSerializer):

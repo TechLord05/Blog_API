@@ -8,8 +8,8 @@ echo "Running migrations..."
 python manage.py migrate --noinput
 
 # Collect static files (optional)
-# echo "Collecting static files..."
-# python manage.py collectstatic --noinput
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
 
 # Start the app with Gunicorn (production)
 echo "Starting server..."
